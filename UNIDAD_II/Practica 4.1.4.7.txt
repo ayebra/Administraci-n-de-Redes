@@ -1,0 +1,102 @@
+Hernandez Moreno Edgar Alejandro
+Alvarez Marquez Carlos
+Chagoya Martinez Jose Daniel
+Figueroa Salazar Jose Guadalupe
+Romero Reyes Joaquin Alfredo
+Martinez Yebra Beatriz Andrea 
+
+Router#show running-config
+Building configuration...
+
+Current configuration : 2379 bytes
+!
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname Router
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+dot11 syslog
+ip cef
+!
+!
+!
+!
+multilink bundle-name authenticated
+!
+crypto pki trustpoint TP-self-signed-511471169
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-511471169
+ revocation-check none
+ rsakeypair TP-self-signed-511471169
+!
+!
+crypto pki certificate chain TP-self-signed-511471169
+ certificate self-signed 01
+  3082023C 308201A5 A0030201 02020101 300D0609 2A864886 F70D0101 04050030
+  30312E30 2C060355 04031325 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 35313134 37313136 39301E17 0D313731 30313232 30343430
+  365A170D 32303031 30313030 30303030 5A303031 2E302C06 03550403 1325494F
+  532D5365 6C662D53 69676E65 642D4365 72746966 69636174 652D3531 31343731
+  31363930 819F300D 06092A86 4886F70D 01010105 0003818D 00308189 02818100
+  A50025C0 F21B5D22 D2C950FC 0003E794 EC2659CD E22DBBDD 948A4C96 5FF68C4F
+  ACBABB33 3A0EE267 D7B618CA 1964E786 260C73B4 C43DF010 7B22787E B0897064
+  0FBE4F4E A2438960 41330764 298869B4 33710672 5607597E 452B613A 0E265510
+  621BD078 AB06A8BD 5074E159 0D70D8E8 AB741029 23318397 753C76DA 8694C9A9
+  02030100 01A36630 64300F06 03551D13 0101FF04 05300301 01FF3011 0603551D
+  11040A30 08820652 6F757465 72301F06 03551D23 04183016 80144B0E 5351997C
+  ABCC8658 A2D04F4E 5EBC3153 BAC3301D 0603551D 0E041604 144B0E53 51997CAB
+  CC8658A2 D04F4E5E BC3153BA C3300D06 092A8648 86F70D01 01040500 03818100
+  8FDC21CE 2CCB2A0E 95596DB1 4F241361 326F0965 5D773490 2E12FD2E 63191A18
+  527029DF 5683D11C D4DC1DC2 87DCC629 52E50158 8ECC19A2 9A714970 FB2D0227
+  87C18B07 5858896E 8DE93358 FEDCE9C2 39CF5912 BD236A87 B284BB34 2C6FD9D0
+  8D97BD25 77E8D588 44FD890D 4DA019F7 473B22F4 6705FE50 7AF24BE7 6622BC38
+        quit
+!
+!
+username admin privilege 15 secret 5 $1$u/lC$JkyL4TRHvm7Hgk6OKYyVT.
+archive
+ log config
+  hidekeys
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ no ip address
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/1
+ ip address 192.168.1.1 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface Serial0/0/0
+ no ip address
+ shutdown
+!
+ip forward-protocol nd
+!
+!
+ip http server
+ip http secure-server
+!
+!
+!
+control-plane
+!
+!
+line con 0
+line aux 0
+line vty 0 4
+ login
+!
+scheduler allocate 20000 1000
